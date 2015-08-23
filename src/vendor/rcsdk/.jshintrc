@@ -1,0 +1,8 @@
+{
+  "curly": false,
+  "eqeqeq": false,
+  "indent": 4,
+  "latedef": true,
+  "laxbreak": true,
+  "plusplus": false
+}
