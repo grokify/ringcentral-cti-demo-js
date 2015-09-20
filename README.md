@@ -3,7 +3,7 @@ RingCentral CTI Demo for JavaScript
 
 ## Overview
 
-This is a demo that showcases various use cases for the RingCentral Connect Platform. The demo runs as a set of HTML5 static webpages that can on a server or locally.
+This is a demo that showcases various use [Call Telephony Integration (CTI)](https://en.wikipedia.org/wiki/Computer_telephony_integration)cases for the RingCentral Connect Platform. The demo runs as a set of HTML5 static webpages that can on a server or locally.
 
 The demo showcases the following use cases:
 
