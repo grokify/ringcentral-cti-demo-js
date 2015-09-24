@@ -43,6 +43,12 @@ $ git clone https://github.com/grokify/ringcentral-cti-demo-js
 $ http-server ringcentral-cti-demo-js/src
 ```
 
+Navigate Google Chrome to the location sepcified by `http-server`, e.g.
+
+```
+http://localhost:8080
+```
+
 ## Customization
 
 ### Syntax Highlighting
