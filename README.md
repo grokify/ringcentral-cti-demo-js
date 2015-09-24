@@ -81,7 +81,7 @@ RingCentral API Explorer
 
 Any reports of problems, comments or suggestions are most welcome.
 
-Please report these on [Github](https://github.com/grokify/ringcentral-sdk-ruby)
+Please report these on [GitHub](https://github.com/grokify/ringcentral-cti-demo-js)
 
 ## License
 
