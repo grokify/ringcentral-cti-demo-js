@@ -1,0 +1,35 @@
+.fixed {font-family:courier,serif; background-color:#efefef; color:black; font-weight:bold;}
+
+body {padding-top:70px}
+pre {margin-bottom:2em;}
+
+.rcPgTitle {margin:0 0 0.8em 0; padding:0;}
+
+#rcCallWindow {
+    position:fixed;
+    width:250px;
+    height:300px;
+    bottom:0;
+    right:0;
+    margin-bottom:0;
+    margin-right:30px;
+    padding-bottom:0;
+}
+
+.rcDemoIndexItem {height:16em;}
+
+#rcCallWindowContent {
+    position:fixed;
+    width:250px;
+    height:300px;
+    bottom:0;
+    right:0;
+    margin-bottom:0;
+    margin-right:30px;
+    padding-bottom:0;
+}
+
+.footerBar {background-color:#4E76AE;height:1px}
+.footerContainer {padding-bottom:2em}
+
+.pad-x-1 {margin-left:1em;}

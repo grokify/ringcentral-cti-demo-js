@@ -14,6 +14,41 @@ The demo showcases the following use cases:
 1. Call Recording Retrieval and Playback
 1. SMS
 
+## Getting Started
+
+You can run this demo simply by adding the `src` directory to any webserver. There is no need to run a database as the demo stores all necessary data using HTML5 Local Storage (e.g. `window.localStorage`).
+
+### Using Node.js http-server
+
+Using Node.js and `http-server` ([NPM package](https://www.npmjs.com/package/http-server)), you can start a local server using the following:
+
+#### Pre-reqs
+
+Install NPM globally:
+
+```
+$ curl https://npmjs.org/install.sh | sh
+```
+
+Install `http-server` globally so it cna be run from the command line.
+
+```
+$ npm install http-server -g
+```
+
+Install and run demo.
+
+```bash
+$ git clone https://github.com/grokify/ringcentral-cti-demo-js
+$ http-server ringcentral-cti-demo-js/src
+```
+
+## Customization
+
+### Syntax Highlighting
+
+This demo uses [highlight.js](https://highlightjs.org/) for syntax highlighting. The CSS style files are located in the [GitHub repo](https://github.com/isagalaev/highlight.js/tree/master/src/styles). To choose any style, simply copy the desired style CSS file to the project's `css/highlight.css` location.
+
 ## Links
 
 Project Repo
