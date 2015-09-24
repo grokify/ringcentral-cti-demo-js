@@ -63,7 +63,7 @@ This demo uses [highlight.js](https://highlightjs.org/) for syntax highlighting.
 
 Project Repo
 
-* https://github.com/grokify/ringcentral-sdk-ruby
+* https://github.com/grokify/ringcentral-cti-demo-js
 
 RingCentral SDK for JavaScript
 
