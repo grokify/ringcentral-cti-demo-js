@@ -14,7 +14,9 @@ The demo showcases the following use cases:
 1. Call Recording Retrieval and Playback
 1. SMS
 
-[View Screenshot](https://raw.githubusercontent.com/grokify/ringcentral-cti-demo-js/master/src/images/cti-demo.png).
+[View Screenshot](https://raw.githubusercontent.com/grokify/ringcentral-cti-demo-js/master/src/images/cti-demo.png)
+
+[View Demo](http://grokify.github.io/cti-demo/)
 
 ## Getting Started
 
