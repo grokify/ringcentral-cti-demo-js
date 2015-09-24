@@ -14,6 +14,8 @@ The demo showcases the following use cases:
 1. Call Recording Retrieval and Playback
 1. SMS
 
+[View Screenshot](https://raw.githubusercontent.com/grokify/ringcentral-cti-demo-js/master/src/images/cti-demo.png).
+
 ## Getting Started
 
 You can run this demo simply by adding the `src` directory to any webserver. There is no need to run a database as the demo stores all necessary data using HTML5 Local Storage (e.g. `window.localStorage`).
