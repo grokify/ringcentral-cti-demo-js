@@ -16,6 +16,7 @@
     <link href="./css/highlight.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
     <script src="./vendor/hideShowPassword/2.0.7/hideShowPassword.min.js"></script>
+    <script src="./vendor/nathanhammond/libphonenumber/0.9.3/dist/libphonenumber.js"></script>
     <!-- RC SDK -->
     <script src="./vendor/es6-promise-polyfill/1.0.0/promise.js"></script>
     <script src="./vendor/crypto-js/3.1.2/rollups/aes.js"></script>
@@ -110,12 +111,14 @@ $(function() {
 <script>
 // Add SMS
 $('.telval').after(function() {
+    //phoneUtils.formatE164(phoneNumber, regionCode);
     return $('<button>')
         .attr('class','btn btn-xs btn-primary pad-x-1')
         .attr('data-toggle','modal')
         .attr('data-target','#rcDemoSmsModal')
         .attr('onclick',
-            '$("#rcDemoSmsTo").val( $(\'#'+$(this).attr('id')+'\').val())' + ';'
+            //'$("#rcDemoSmsTo").val( $(\'#'+$(this).attr('id')+'\').val())' + ';'
+            '$("#rcDemoSmsTo").val( phoneUtils.formatE164($(\'#'+$(this).attr('id')+'\').val()),"us")' + ';'
             + '$("#rcDemoSmsFrom").val(\'' + rcDemo.Core.getUsername() + '\')'
         )
         .append('<i class="fa fa-comments-o"></i> SMS');
@@ -434,24 +437,5 @@ platform.post('/account/~/extension/~/sms', {
   </div>
 </div></div>
 
-<script>
-
-$(function() {
-  $(".tel2").bind( "click", function() {
-    var id = $(this).attr('id');
-    var selector = '#' + id + 'val';
-    var toPhoneNumber = $('#' + id + 'val').val();
-    var fromPhoneNumber = $('#token_view_usr').val();
-    rcDemo.Call.createRingOut({
-      from: {phoneNumber: fromPhoneNumber},
-      to: {phoneNumber: toPhoneNumber},
-      //callerId: {phoneNumber: '18882222222'}, // optional,
-      playPrompt: true // optional
-    });
-    //alert( toPhoneNumber );
-  });
-});
-
-</script>
   </body>
 </html>

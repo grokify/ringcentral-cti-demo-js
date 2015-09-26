@@ -575,9 +575,9 @@ function rcDemoSms(rcDemoCore) {
                 text: text
             }
         }).then(function(response) {
-            console.log('SMS Success: ' + response.data.id);
+            console.log('SMS_SEND_Success: ' + response.data.id);
         }).catch(function(e) {
-            console.log('SMS Error: ' + e.message);
+            console.log('SMS_SEND_Error: ' + e.message);
         });
     }
 }
