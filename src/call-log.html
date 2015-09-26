@@ -286,16 +286,22 @@ var recordingEl = $('&lt;audio&gt;').attr('controls', 'controls').append(
       </td>
     </tr>
     <tr>
+      <td colspan="2">
+        <p>OAuth 2.0 Redirect URI:</p>
+        <input type="text" id="rcAppRedirectUri" class="form-control" value="" placeholder="Redirect URI, e.g. http://grokify.github.com/cti-demo/oauth.html" />
+      </td>
+    </tr>
+    <tr class="rcDemoCfgAuth2L">
       <td colspan="2"><hr>
         <p style="font-weight:bold">Authorization Information</p>
-        <p>
-          <input type="radio" name="rcAuth" id="rcAuth2L" checked="checked" /> 2-legged OAuth
-          <input type="radio" name="rcAuth" id="rcAuth3L" disabled="disabled" /> 3-legged OAuth
+        <p style="display:none">
+          <input type="radio" name="rcAuth" id="rcAuth3L" disabled="checked" /> 3-legged OAuth
+          <input type="radio" name="rcAuth" id="rcAuth2L" checked="disabled" /> 2-legged OAuth
         </p>
         <p style="font-weight:bold">2-legged OAuth: Default User Information (pre-filled in authorization form)</p>
       </td>
     </tr>
-    <tr>
+    <tr class="rcDemoCfgAuth2L">
       <td style="width:80%;padding-right:1em">
         <div style="clear:both"></div>
         <p>Username:</p>
@@ -306,7 +312,7 @@ var recordingEl = $('&lt;audio&gt;').attr('controls', 'controls').append(
         <input type="text" id="rcUserExtension" class="form-control" value="BB" placeholder="Extension" />
       </td>
     </tr>
-    <tr>
+    <tr class="rcDemoCfgAuth2L">
       <td colspan="2">
         <p>Password:</p>
         <input type="password" id="rcUserPassword" class="form-control" value="" placeholder="Password" />
@@ -321,6 +327,7 @@ var recordingEl = $('&lt;audio&gt;').attr('controls', 'controls').append(
     </tr>
   </table>
 </div><!-- END DEMO CONFIG MODAL BODY -->
+
 
       </div>
       <div class="modal-footer">

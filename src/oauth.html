@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>RingCentral CTI Demo</title>
+    <link href="http://www.ringcentral.com/content/dam/ringcentral/images/favicon.ico" type="image/vnd.microsoft.icon" rel="shortcut icon">
+    <link href="http://www.ringcentral.com/content/dam/ringcentral/images/favicon.ico" type="image/vnd.microsoft.icon" rel="icon">
+
+    <!-- Demo Prereqs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-k2/8zcNbxVIh5mnQ52A0r3a6jAgMGxFJFE2707UxGCk= sha512-ZV9KawG2Legkwp3nAlxLIVFudTauWuBpC10uEafMHYL0Sarrz5A7G79kXh5+5+woxQ5HM559XX2UZjMJ36Wplg==" crossorigin="anonymous">
+    <!--link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/default.min.css" rel="stylesheet"-->
+    <link href="./css/highlight.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+    <script src="./vendor/hideShowPassword/2.0.7/hideShowPassword.min.js"></script>
+    <!-- RC SDK -->
+    <script src="./vendor/es6-promise-polyfill/1.0.0/promise.js"></script>
+    <script src="./vendor/crypto-js/3.1.2/rollups/aes.js"></script>
+    <script src="./vendor/crypto-js/3.1.2/rollups/sha256.js"></script>
+    <script src="./vendor/crypto-js/3.1.2/components/mode-ecb.js"></script>
+    <script src="./vendor/pubnub/3.6.7/pubnub.js"></script>
+    <script src="./vendor/rcsdk/1.3.1/build/rc-sdk.js"></script>
+    <!-- Demo scripts -->
+    <link rel="stylesheet" href="./css/fontawesome-more.css">
+    <link rel="stylesheet" href="./css/ctidemo.css">
+    <script src="./js/ctidemodata.js"></script>
+    <script src="./js/ctidemo.js"></script>
+    <script src="./js/ctiscreenpop.js"></script>
+	</head>
+  <body role="document">
+
+<script>
+// Process OAuth 2.0 Redirect
+var rcPgCfgPg = {
+  rcPgTitle: 'Linked Accounts',
+  rcPgCrumbStub: 'linked-accounts'
+};
+rcDemo = new rcDemo(rcPgCfgGen, rcPgCfgPg);
+rcDemo.init();
+
+function processOAuthRedirect(rcDemo) {
+    var rcsdk = rcDemo.Core.rcSdk;
+    var appInfo = rcDemo.Core.getAppInfo();
+    rcsdk.getPlatform().logout();
+
+    var qs = rcsdk.getPlatform().parseAuthRedirectUrl(window.location.href);
+    qs.redirectUri = appInfo['rcAppRedirectUri'];
+
+    if ('code' in qs) {
+        var res = rcsdk.getPlatform().authorize(qs)
+            .then(function(response) {
+                rcDemo.Auth.setAuthData(response.json);
+                window.open('', '_self', ''); 
+                window.close(); 
+            }).catch(function(e) {
+                document.write("AUTHZ_ERR")
+            });
+    } else {
+        console.log("E_NO_CODE")
+    }
+}
+processOAuthRedirect(rcDemo);
+</script>
+
+	</body>
+</html>

@@ -115,9 +115,9 @@ $(function() {
     </div>
 
     <div class="container theme-showcase" role="main">
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="panel panel-primary rcDemoIndexItem">
+      <div class="row equal">
+        <div class="col-sm-12 col-md-4">
+          <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title"><a href="./linked-accounts.html"><i class="fa fa-user"></i> Authorization</a></h3>
             </div>
@@ -127,8 +127,8 @@ $(function() {
             </div>
           </div>
         </div>
-        <div class="col-sm-4">
-          <div class="panel panel-primary rcDemoIndexItem">
+        <div class="col-sm-12 col-md-4">
+          <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title"><a href="./contacts.html"><i class="fa fa-phone"></i> Click-to-Dial</a></h3>
             </div>
@@ -138,8 +138,8 @@ $(function() {
             </div>
           </div>
         </div>
-        <div class="col-sm-4">
-          <div class="panel panel-primary rcDemoIndexItem">
+        <div class="col-sm-12 col-md-4">
+          <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title"><a href="./contacts.html"><i class="fa fa-list-alt"></i> Inbound Screen Pop</a></h3>
             </div>
@@ -153,9 +153,9 @@ $(function() {
     </div>
 
     <div class="container theme-showcase" role="main">
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="panel panel-primary rcDemoIndexItem">
+      <div class="row equal">
+        <div class="col-xs-12 col-sm-12 col-md-4">
+          <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title"><a href="./call-log.html"><i class="fa fa-list"></i> Call Log Retrieval</a></h3>
             </div>
@@ -164,8 +164,8 @@ $(function() {
             </div>
           </div>
         </div>
-        <div class="col-sm-4">
-          <div class="panel panel-primary rcDemoIndexItem">
+        <div class="col-xs-12 col-sm-12 col-md-4">
+          <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title"><a href="./call-log.html"><i class="fa fa-volume-up"></i> Call Recordings</a></h3>
             </div>
@@ -179,8 +179,8 @@ $(function() {
             </div>
           </div>
         </div>
-        <div class="col-sm-4">
-          <div class="panel panel-primary rcDemoIndexItem">
+        <div class="col-xs-12 col-sm-12 col-md-4">
+          <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title"><a href="./contacts.html"><i class="fa fa-comments-o"></i> Sending SMS</a></h3>
             </div>
@@ -242,16 +242,22 @@ $(function() {
       </td>
     </tr>
     <tr>
+      <td colspan="2">
+        <p>OAuth 2.0 Redirect URI:</p>
+        <input type="text" id="rcAppRedirectUri" class="form-control" value="" placeholder="Redirect URI, e.g. http://grokify.github.com/cti-demo/oauth.html" />
+      </td>
+    </tr>
+    <tr class="rcDemoCfgAuth2L">
       <td colspan="2"><hr>
         <p style="font-weight:bold">Authorization Information</p>
-        <p>
-          <input type="radio" name="rcAuth" id="rcAuth2L" checked="checked" /> 2-legged OAuth
-          <input type="radio" name="rcAuth" id="rcAuth3L" disabled="disabled" /> 3-legged OAuth
+        <p style="display:none">
+          <input type="radio" name="rcAuth" id="rcAuth3L" disabled="checked" /> 3-legged OAuth
+          <input type="radio" name="rcAuth" id="rcAuth2L" checked="disabled" /> 2-legged OAuth
         </p>
         <p style="font-weight:bold">2-legged OAuth: Default User Information (pre-filled in authorization form)</p>
       </td>
     </tr>
-    <tr>
+    <tr class="rcDemoCfgAuth2L">
       <td style="width:80%;padding-right:1em">
         <div style="clear:both"></div>
         <p>Username:</p>
@@ -262,7 +268,7 @@ $(function() {
         <input type="text" id="rcUserExtension" class="form-control" value="BB" placeholder="Extension" />
       </td>
     </tr>
-    <tr>
+    <tr class="rcDemoCfgAuth2L">
       <td colspan="2">
         <p>Password:</p>
         <input type="password" id="rcUserPassword" class="form-control" value="" placeholder="Password" />

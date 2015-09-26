@@ -29,6 +29,26 @@ pre {margin-bottom:2em;}
     padding-bottom:0;
 }
 
+.rcDemoCfgAuth2L {display:none;}
+
+.equal, .equal > div[class*='col-'] {  
+    display: -webkit-flex;
+    display: flex;
+    flex:1 1 auto;
+}
+
+@media (min-width: 800){
+.equal, .equal > div[class*='col-'] {}
+}
+
+.nowrap {white-space:nowrap;scroll-x:hidden;}
+
+.equal2 {display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+}
+
 .footerBar {background-color:#4E76AE;height:1px}
 .footerContainer {padding-bottom:2em}
 

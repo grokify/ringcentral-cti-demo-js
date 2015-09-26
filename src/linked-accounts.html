@@ -22,7 +22,7 @@
     <script src="./vendor/crypto-js/3.1.2/rollups/sha256.js"></script>
     <script src="./vendor/crypto-js/3.1.2/components/mode-ecb.js"></script>
     <script src="./vendor/pubnub/3.6.7/pubnub.js"></script>
-    <script src="./vendor/rcsdk/1.2.1/build/rc-sdk.js"></script>
+    <script src="./vendor/rcsdk/1.3.1/build/rc-sdk.js"></script>
     <!-- Demo scripts -->
     <link rel="stylesheet" href="./css/fontawesome-more.css">
     <link rel="stylesheet" href="./css/ctidemo.css">
@@ -30,6 +30,22 @@
     <script src="./js/ctidemo.js"></script>
     <script src="./js/ctiscreenpop.js"></script>
     <script>
+
+$.oauthpopup = function(options)
+{
+    options.windowName = options.windowName ||  'ConnectWithOAuth'; // should not include space for IE
+    options.windowOptions = options.windowOptions || 'location=0,status=0,width=400,height=660';
+    options.callback = options.callback || function(){ window.location.reload(); };
+    var that = this;
+    console.log(options.path);
+    that._oauthWindow = window.open(options.path, options.windowName, options.windowOptions);
+    that._oauthInterval = window.setInterval(function(){
+        if (that._oauthWindow.closed) {
+            window.clearInterval(that._oauthInterval);
+            options.callback();
+        }
+    }, 1000);
+};
 
 var rcPgCfgPg = {
   rcPgTitle: 'Linked Accounts',
@@ -39,9 +55,28 @@ rcDemo = new rcDemo(rcPgCfgGen, rcPgCfgPg);
 var rcsdk = rcDemo.Core.rcSdk;
 var rcCallWin = new rcCallWinMgr();
 
+function Auth3l(rcsdk) {
+    var t=this;
+    t.rcSdk = rcsdk;
+    t.redirectUri;
+    t.authorize = function() {
+        var urltoopen = t.rcSdk.getPlatform().getAuthURL({
+            redirect_uri: t.redirectUri
+        })
+        $.oauthpopup({
+            path: urltoopen,
+            callback: function()
+            {
+                console.log('callback');
+            }
+        });
+    }
+}
+
 $(function() {
     rcDemo.init();
     rcDemo.Auth.init();
+    rcDemo.Auth3l = new Auth3l(rcDemo.Core.rcSdk);
     rcCallWin.rcSdk = rcDemo.Core.rcSdk;
     rcCallWin.subscriptionStart();
 });
@@ -94,18 +129,32 @@ $(function() {
                 <div id="linked_accounts_message"></div>
 
                 <div style="overflow:scroll">
-                    <table id="linkedaccounts" class="table">
+                    <table id="linkedaccounts" class="table" style="width:100%">
                         <tr>
-                            <th>Username</th><th>Extension</th><th>Access Token</th>
+                          <th>Access Token</th>
+                          <td id="rcLinkAccessToken"></td>
                         </tr>
                         <tr>
-                            <td id="rcLinkUsername"></td>
-                            <td id="rcLinkExtension"></td>
-                            <td id="rcLinkAccessToken" style="white-space:nowrap"></td>
+                          <th class="nowrap">Access Token TTL</th>
+                          <td id="rcLinkAccessTokenTtl"></td>
+                        </tr>
+                        <tr>
+                          <th>Refresh Token</th>
+                          <td id="rcLinkRefreshToken"></td>
+                        </tr>
+                        <tr>
+                          <th class="nowrap">Refresh Token TTL</th>
+                          <td id="rcLinkRefreshTokenTtl"></td>
+                        </tr>
+                        <tr>
+                          <th>Scope</th>
+                          <td id="rcLinkScope"></td>
                         </tr>
                     </table>
                 </div>
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#linkAccountModal"><i class="fa fa-link"></i> Link Account </button>
+                <button type="button" class="btn btn-default rcDemoCfgAuth2L" data-toggle="modal" data-target="#linkAccountModal"><i class="fa fa-link"></i> Link Account</button>
+                <button type="button" class="btn btn-default" onclick="rcDemo.Auth3l.authorize()"><i class="fa fa-link"></i> Link Account</button>
+
                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#unlinkAccountModal"><i class="fa fa-unlink"></i> Unlink Account </button>
                 <button type="button" class="btn btn-default" onclick="rcDemo.Auth.refresh();return false;"><i class="fa fa-refresh"></i> Refresh</button>
             </div>
@@ -271,16 +320,22 @@ $(function() {
       </td>
     </tr>
     <tr>
+      <td colspan="2">
+        <p>OAuth 2.0 Redirect URI:</p>
+        <input type="text" id="rcAppRedirectUri" class="form-control" value="" placeholder="Redirect URI, e.g. http://grokify.github.com/cti-demo/oauth.html" />
+      </td>
+    </tr>
+    <tr class="rcDemoCfgAuth2L">
       <td colspan="2"><hr>
         <p style="font-weight:bold">Authorization Information</p>
-        <p>
-          <input type="radio" name="rcAuth" id="rcAuth2L" checked="checked" /> 2-legged OAuth
-          <input type="radio" name="rcAuth" id="rcAuth3L" disabled="disabled" /> 3-legged OAuth
+        <p style="display:none">
+          <input type="radio" name="rcAuth" id="rcAuth3L" disabled="checked" /> 3-legged OAuth
+          <input type="radio" name="rcAuth" id="rcAuth2L" checked="disabled" /> 2-legged OAuth
         </p>
         <p style="font-weight:bold">2-legged OAuth: Default User Information (pre-filled in authorization form)</p>
       </td>
     </tr>
-    <tr>
+    <tr class="rcDemoCfgAuth2L">
       <td style="width:80%;padding-right:1em">
         <div style="clear:both"></div>
         <p>Username:</p>
@@ -291,7 +346,7 @@ $(function() {
         <input type="text" id="rcUserExtension" class="form-control" value="BB" placeholder="Extension" />
       </td>
     </tr>
-    <tr>
+    <tr class="rcDemoCfgAuth2L">
       <td colspan="2">
         <p>Password:</p>
         <input type="password" id="rcUserPassword" class="form-control" value="" placeholder="Password" />
