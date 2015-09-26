@@ -363,6 +363,8 @@ var recordingEl = $('&lt;audio&gt;').attr('controls', 'controls').append(
   <div id="rcCallWindowHead" class="panel-heading"><span id="rcCallWindowTitle"><b><span style="color:orange">RingCentral</span> <span id="rcCallWindowStatus"></span> <label id="rcMin">00</label>:<label id="rcSec">00</label></b></span> <span style="float:right" onclick="rcCallWin.hide();return false;"><i class="fa fa-close"></i></span></div>
   <div id="rcCallWindowBody" class="panel-body">
     <table class="table">
+      <tr><td>Call From</td><td><span id="rcCallFrom"></span></td></tr>
+      <tr><td>Call To</td><td><span id="rcCallTo"></span></td></tr>
       <tr><td>Name</td><td><a href="">John Wang</a></td></tr>
       <tr><td>Company</td><td>RingCentral</td></tr>
       <tr><td>Current Opportunity</td><td><a href="">Subscription Add-on</a></td>
