@@ -47,10 +47,13 @@ $(function() {
         .then(function () {
             rcCallLog.populateRecords();
             rcCallWin.rcSdk = rcDemo.Core.rcSdk;
-            rcCallWin.subscriptionStart();  
+            rcCallWin.startSubscription();  
         }).catch(function (e) {
             $('#appMessage').show();
         })
+    $(window).unload(function() {
+        rcCallWin.endSubscription();  
+    });
 });
 
     </script>

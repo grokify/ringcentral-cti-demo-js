@@ -139,7 +139,7 @@ function rcDemoCore(rcPgCfgGen, rcPgCfgPg) {
             appInfo['server'] = t.rcServerSandbox();
         }
         var json = JSON.stringify(appInfo);
-        console.log('SET_APP_INFO ' + json);
+        //console.log('SET_APP_INFO ' + json);
         window.localStorage.setItem(t.lsKeyApp, JSON.stringify(appInfo));
         t.populateDomApp();
         t.setRcSdk(appInfo);
@@ -147,7 +147,7 @@ function rcDemoCore(rcPgCfgGen, rcPgCfgPg) {
     t.setUserInfo = function(userInfo) {
         userInfo = (typeof userInfo !== 'undefined' && userInfo != null) ? userInfo : {};
         var json = JSON.stringify(userInfo);
-        console.log('SET_USER_INFO ' + json);
+        //console.log('SET_USER_INFO ' + json);
         window.localStorage.setItem(t.lsKeyUser, JSON.stringify(userInfo));
         t.populateDomUser();
     }
@@ -159,11 +159,11 @@ function rcDemoCore(rcPgCfgGen, rcPgCfgPg) {
         });
     }
     t.setInfoFromDom = function() {
-        console.log('setInfoFromDom_S1');
+        //console.log('setInfoFromDom_S1');
         t.setAppInfoFromDom();
-        console.log('setInfoFromDom_S2');
+        //console.log('setInfoFromDom_S2');
         t.setUserInfoFromDom();
-        console.log('setInfoFromDom_SZ');
+        //console.log('setInfoFromDom_SZ');
     }
     t.setAppInfoFromDom = function() {
         var appInfo = t.getAppInfo();
@@ -172,19 +172,19 @@ function rcDemoCore(rcPgCfgGen, rcPgCfgPg) {
             appInfo[fields[i]] = $('#' + fields[i]).val();
         }
         var json = JSON.stringify(appInfo);
-        console.log("SET_APP_INFO_DOM_Z " + json);
+        //console.log("SET_APP_INFO_DOM_Z " + json);
         t.setAppInfo(appInfo);
     }
     t.setUserInfoFromDom = function() {
         var userInfo = t.getUserInfo();
         var fields = t.lsUserFields;
         var json = JSON.stringify(userInfo);
-        console.log("SET_USER_INFO_DOM_S1 " + json);
+        //console.log("SET_USER_INFO_DOM_S1 " + json);
         for (var i=0,l=t.lsUserFields.length;i<l;i++) {
             userInfo[fields[i]] = $('#' + fields[i]).val() || '';
         }
         var json2 = JSON.stringify(userInfo);
-        console.log("SET_USER_INFO_DOM_SZ " + json2);
+        //console.log("SET_USER_INFO_DOM_SZ " + json2);
         t.setUserInfo(userInfo);
     }
     t.clearInfo = function() {
@@ -207,6 +207,7 @@ function rcDemoAuth(rcDemoCore) {
     t.lsKeyAuth = 'rcAuthInfo';
     t.rcDemoCore = rcDemoCore;
     t.rcPlatform = t.rcDemoCore.rcSdk.getPlatform();
+    t.debug = false;
     t.init = function() {
         console.log("INIT_AUTH");
         t.pageAuthPopulate();
@@ -238,10 +239,8 @@ function rcDemoAuth(rcDemoCore) {
     // http://diveintohtml5.info/storage.html
     t.listenAuthData = function() {
         if (window.addEventListener) {
-            console.log("ADD_LISTENDER_STORAGE");
             window.addEventListener("storage", t.handleAuthData, false);
         } else {
-            console.log("ADD_LISTENDER_ONSTORAGE");
             window.attachEvent("onstorage", t.handleAuthData);
         };
     }
@@ -316,9 +315,11 @@ function rcDemoAuth(rcDemoCore) {
             extension: extension,
             password: password
         }).then(function(response) {
-            console.log('authz_success');
-            console.log(JSON.stringify(debug));
-            console.log(response.json);
+            if (t.debug) {
+                console.log('authz_success');
+                console.log(JSON.stringify(debug));
+                console.log(response.json);
+            }
             $('#linked_status').html(' - Account Successfully Linked');
             data = response.data;
             data['userpath'] = userpath;

@@ -3,6 +3,7 @@ function rcCallWinMgr(rcSdk) {
     t.rcSdk = rcSdk;
     t.domId = '#rcCallWindow';
     t.domIdStatus = '#rcCallWindowStatus';
+    t.subscription = null;
     t.show = function() {
         $(t.domId).show();
     }
@@ -62,15 +63,15 @@ function rcCallWinMgr(rcSdk) {
             }
         }
     }
-    t.subscriptionStart = function() {
+    t.startSubscription = function() {
         if (!t.rcSdk.getPlatform().isTokenValid()) {
             console.log("E_IS_NOT_AUTHORIZED__SKIP_SUBSCRIPTION");
             return;
         }
-        var subscription = t.rcSdk.getSubscription();
+        t.subscription = t.rcSdk.getSubscription();
 
-        subscription
-            .on(subscription.events.notification, function(msg) {
+        t.subscription
+            .on(t.subscription.events.notification, function(msg) {
                 var callerId = msg.body.activeCalls[0].from;
                 console.log(msg.body.activeCalls[0].from); // activeCalls is array
                 console.log(msg.body.activeCalls[0].to);
@@ -85,5 +86,16 @@ function rcCallWinMgr(rcSdk) {
                 ],
             })
             .then();
+    }
+    t.endSubscription = function() {
+        if (t.rcSdk.getPlatform.isTokenValid()) {
+            if (t.subscription) {
+                t.subscription.remove({async: false});
+            }
+        }
+        // Detach event listeners
+        if (t.subscription) {
+            subscription.destroy();
+        }
     }
 }

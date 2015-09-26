@@ -44,10 +44,14 @@ $(function() {
     rcDemo.Core.rcSdk.getPlatform().isAuthorized()
         .then(function () {
             rcCallWin.rcSdk = rcDemo.Core.rcSdk;
-            rcCallWin.subscriptionStart();
+            rcCallWin.startSubscription();
         }).catch(function (e) {
             $('#appMessage').show();
         })
+    //window.addEventListener('beforeunload', rcCallWin.endSubscription);
+    $(window).unload(function() {
+        rcCallWin.endSubscription();  
+    });
 });    
 
     </script>
