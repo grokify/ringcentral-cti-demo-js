@@ -111,11 +111,11 @@ $(function() {
             <div class="panel-body">        
           <table id="linkedaccounts" class="table">
             <tr>
-              <th>First Name</th><th>Last Name</th><th>Phone</th>
+              <th>First Name</th><th>Last Name</th><th>URL</th><th>Phone</th>
             </tr>
             <tr>
               <td>
-                John</td><td>Wang</td><td><input id="telval1" class="telval" type="text" value="16501112222">
+                John</td><td>Wang</td><td><a href="http://github.com/grokify">http://github.com/grokify</a></td><td><input id="telval1" class="telval" type="text" value="16501112222">
               </td>
             </tr>
           </table>
@@ -183,9 +183,29 @@ $(function() {
     <div class="container theme-showcase" role="main">
       <div class="row">
         <div class="col-sm-12">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Demo Instructions</h3>
+            </div>
+            <div class="panel-body">
+              <ol>
+                <li>Ensure that you have Configured this demo app and authorized it to access your RingCentral account.</li>
+                <li>For RingUri (URI Scheme) and optionally for RingOut, ensure that you are dialed into the RingCentral for Desktop softphone application.</li>
+                <li>Edit the phone number in the text input field to be a live number.</li>
+                <li>Click any of the three action buttons, RingOut, RingUri or SMS</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+        <div class="col-sm-12">
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title">Instructions &amp; Code</h3>
+              <h3 class="panel-title">Developer Instructions</h3>
             </div>
             <div class="panel-body">
               <h3>Install RingCentral softphone (optional)</h3>

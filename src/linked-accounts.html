@@ -169,10 +169,28 @@ $(function() {
                     </table>
                 </div>
                 <button type="button" class="btn btn-default rcDemoCfgAuth2L" data-toggle="modal" data-target="#linkAccountModal"><i class="fa fa-link"></i> Link Account</button>
-                <button type="button" class="btn btn-default" onclick="rcDemo.Auth3l.authorize()"><i class="fa fa-link"></i> Link Account</button>
+                <button type="button" class="btn btn-default" onclick="$('#linked_accounts_message').html('');rcDemo.Auth3l.authorize()"><i class="fa fa-link"></i> Link Account</button>
 
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#unlinkAccountModal"><i class="fa fa-unlink"></i> Unlink Account </button>
-                <button type="button" class="btn btn-default" onclick="rcDemo.Auth.refresh();return false;"><i class="fa fa-refresh"></i> Refresh</button>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#unlinkAccountModal" onclick="$('#linked_accounts_message').html('');"><i class="fa fa-unlink"></i> Unlink Account </button>
+                <button type="button" class="btn btn-default" onclick="$('#linked_accounts_message').html('');rcDemo.Auth.refresh();return false;"><i class="fa fa-refresh"></i> Refresh</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Demo Instructions</h3>
+            </div>
+            <div class="panel-body">
+              <ol>
+                <li>Ensure that you have Configured this demo app by entering the app key, app secret and OAuth 2.0 redirect URI.</li>
+                <li>Click the "Link Account", "Unlink Account" and "Refresh" links to view what happens.</li>
+              </ol>
             </div>
           </div>
         </div>
@@ -184,7 +202,7 @@ $(function() {
         <div class="col-sm-12">
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title">Instructions &amp; Code</h3>
+              <h3 class="panel-title">Developer Instructions</h3>
             </div>
             <div class="panel-body">
 
