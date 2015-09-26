@@ -29,11 +29,11 @@
     <script src="./js/ctidemodata.js"></script>
     <script src="./js/ctidemo.js"></script>
     <script src="./js/ctiscreenpop.js"></script>
-    <script>
+    <script type="text/javascript">
 
 var rcPgCfgPg = {
-  rcPgTitle: '<span style="color:#0064A0">Ring</span><span style="color:orange">Central</span> CTI Demo',
-  rcPgCrumbStub: ''
+  rcPgTitle: 'Instructions',
+  rcPgCrumbStub: 'instructions'
 };
 rcDemo = new rcDemo(rcPgCfgGen, rcPgCfgPg);
 var rcsdk = rcDemo.Core.rcSdk;
@@ -48,22 +48,14 @@ $(function() {
         }).catch(function (e) {
             $('#appMessage').show();
         })
-/*
-    $(window).on('beforeunload', function() {
-        console.log("UNLOAD");
-        var res = rcCallWin.endSubscription();
-        return 'UNLOADING';
-    });*/
-});
+    $(window).unload(function() {
+        rcCallWin.endSubscription();  
+    });
+}); 
 
-/*
-$(window).on('beforeunload', function() {
-  return 'Your own message goes here...';
-});
-*/
     </script>
   </head>
-  <body role="document">
+  <body role="document" style="padding-top:70px">
     <!-- Fixed navbar -->
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -93,9 +85,11 @@ $(window).on('beforeunload', function() {
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
           <ol class="breadcrumb">
-            <li class="active"><a href="./index.html"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="./index.html"><i class="fa fa-home"></i> Home</a></li>
+            <li id="rcPgCrumbLeaf" class="active"></li>
           </ol>
           <h2 id="rcPgTitle" class="rcPgTitle"></h2>
+
         </div>
       </div>
     </div>
@@ -110,106 +104,160 @@ $(window).on('beforeunload', function() {
 
     <div class="container theme-showcase" role="main">
       <div class="row">
-        <div class="col-sm-6">
-          <div class="panel panel-default" style="height:22em">
+        <div class="col-sm-12">
+          <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">Overview</h3>
             </div>
             <div class="panel-body">
-              <p>This demo app is designed to showcase common RingCentral integration use cases for browser app integrations.</p>
-              <p>Design goals for this demo app include running on a server as static HTML with no dynamic or storage back end. All state is maintained on the client using HTML5 local storage.</p>
-              <p>An easy way to run this locally is to clone the GitHub repository at <a href="https://github.com/grokify/ringcentral-cti-demo-js">https://github.com/grokify/ringcentral-cti-demo-js</a> and run Node.js http-server.</p>
+
+              <p>This demo app is design to provide a basic working implementation of major CTI use cases with the RingCentral Connect Platform. Use cases include the following:</p>
+
+              <ol>
+                <li>Authorization</li>
+                <li>Making calls (Click-to-Dial)</li>
+                <li>Inbound Screen Pop</li>
+                <li>SMS</li>
+                <li>Call Log Retreival</li>
+                <li>Call Recording Download</li>
+                <li>Call Recording Streaming Playback</li>
+              </ol>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Requirements</h3>
+            </div>
+            <div class="panel-body">
+
+              <p>This demo is designed to run as a set of static HTML pages.</p>
+
+              <p>The requirements are as follows:</p>
+
+              <ol>
+                <li>Application with active sandbox key and secret</li>
+                <li>Sandbox account with active phone numbers</li>
+                <li>RingCentral for Desktop softphone (optional)</li>
+                <li>Local server instance (optional)</li>
+              </ol>
+
+              <p>The RingCentral application and sandbox account information can be found in your RingCentral Developer account at <a href="https://developers.ringcentral.com/login.html">the RingCentral Developer Portal</a>:</p>
+
+              <ol>
+                <li>A RingCentral app with active sandbox environment keys</li>
+                <li>A RingCentral sandbox account with active users and phone numbers</li>
+              </ol>
+
+              <p>For the Click-to-Dial integrations to make calls, you will also need a phone. An easy phone to use is the <a href="http://www.ringcentral.com/office/features/desktop-apps/overview.html">RingCentral for Desktop softphone</a> which is available for MacOS and Windows.</p>
+
+              <p>If you wish to run your own copy, an easy way to run this demo is to clone the GitHub repo and run the source on Node.js and NPM's http-server as documented on the GitHub repo: <a href="http://github.com/grokify/ringcentral-cti-demo-js/">http://github.com/grokify/ringcentral-cti-demo-js/</a>.</p>
+
+              <p>An online demo on GitHub pages is also available at <a href="http://grokify.github.io/cti-demo/">http://grokify.github.io/cti-demo/</a>.</p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Configuration</h3>
+            </div>
+            <div class="panel-body">
+
+              <h4>Softphone Configuration</h4>
+
+              <p>To configure the softphone to use the RingCentral sandbox environment, please following th instructions in the <a href="https://developers.ringcentral.com/library/tutorials/test-account.html">How-To: Use Test Accounts in the RingCentral Sandbox quickstart tutorial</a>.</p>
+
+              <h4>Demo Configuration</h3>
+
+              <p>To set up this demo, click the <button data-toggle="modal" data-target="#rcDemoConfigModal"><i class="fa fa-wrench"></i> Configure</button> button in the upper right order of any page and add your app's key, secret, and OAuth redirect URL. These need to match the settings in your <a href="https://developers.ringcentral.com/login.html">the RingCentral Developer Portal</a> app page.</p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Authorization</h3>
+            </div>
+            <div class="panel-body">
+
+              <p>Now you are ready to behave as an end-user. The end-user will first need to authorize the demo app to access their account via 3-legged OAuth. To do this navigate to the <b><i class="fa fa-gear"></i> Linked Accounts</b> page and then click the <button><i class="fa fa-link"></i> Link Account</button> button to perform a 3-legged OAuth authorization.</p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Use Cases</h3>
+            </div>
+            <div class="panel-body">
+
+              <p>After authorization, use the <a href="./contacts.html"><i class="fa fa-group"></i> Contacts</i></a> and <a href="./call-log.html"><i class="fa fa-list"></i> Call Log</a></b> pages to make calls, send SMS, view call logs, and listen to recordings.</p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row equal">
+        <div class="col-sm-6">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-book"></i> Resources</h3>
+            </div>
+            <div class="panel-body">
+              <p>RingCentral Developers provides the following:</p>
+              <ol>  
+                <li><a href="https://developers.ringcentral.com">Developer Portal <i class="fa fa-external-link"></i></a></li>
+                <li><a href="https://developers.ringcentral.com/api-docs/latest/index.html">API Docs <i class="fa fa-external-link"></i></a></li>
+                <li><a href="http://ringcentral.github.io/api-explorer">API Explorer <i class="fa fa-external-link"></i></a></li>
+                <li><a href="https://github.com/ringcentral">SDKs <i class="fa fa-external-link"></i></a></li>
+                <li><a href="https://ringcentral.github.io/cti-tutorial">CTI Tutorial <i class="fa fa-external-link"></i></a></li>
+              </ol>
+              <p>All of these are available on our Developer Quick Reference at <b><a href="http://ringcentral.github.io">http://RingCentral.GitHub.IO <i class="fa fa-external-link"></i></a></b></p>
             </div>
           </div>
         </div>
         <div class="col-sm-6">
-          <div class="panel panel-default" style="height:22em">
-            <div class="panel-heading">
-              <h3 class="panel-title">Getting Started</h3>
-            </div>
-            <div class="panel-body">
-              <p>To get started, click the <button data-toggle="modal" data-target="#rcDemoConfigModal"><i class="fa fa-wrench"></i> Configure</button> button in the upper right corner to add your sandbox application key and application secret.</p><p>This will also let you set a default username, extension and password that will be used as default values in the <a href="./linked-accounts.html">Linked Accounts</a> page for ease of demo purposes.</p>
-              <p>For more in-depth information use the <b><a href="./instructions.html"><i class="fa fa-book"></i> Instructions</a></b> page.</p>
-
-              <input type="button" onclick="rcCallWin.toggle();return false;" value="Toggle Call Window" style="display:none" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container theme-showcase" role="main">
-      <div class="row equal">
-        <div class="col-sm-12 col-md-4">
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title"><a href="./linked-accounts.html"><i class="fa fa-user"></i> Authorization</a></h3>
+              <h3 class="panel-title"><i class="fa fa-support"></i> Support</h3>
             </div>
             <div class="panel-body">
-              <p>The RingCentral Connect Platform provides a REST API that uses OAuth 2.0 for authorization.</p>
-              <p>Go to <a href="./linked-accounts.html">Linked Accounts</a> to see how this is done.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-12 col-md-4">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title"><a href="./contacts.html"><i class="fa fa-phone"></i> Click-to-Dial</a></h3>
-            </div>
-            <div class="panel-body">
-              <p>Click-to-Dial is supported using both RingOut and URI Scheme.</p>
-              <p>Use the <a href="./contacts.html">Contacts</a> page to view both of these methods in action.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-12 col-md-4">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title"><a href="./contacts.html"><i class="fa fa-list-alt"></i> Inbound Screen Pop</a></h3>
-            </div>
-            <div class="panel-body">
-              <p>This demo includes subscribing to inbound calls, extracting the caller id, performing a database lookup and then display a screen pop.</p>
-              <p>This exists on every page.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container theme-showcase" role="main">
-      <div class="row equal">
-        <div class="col-xs-12 col-sm-12 col-md-4">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title"><a href="./call-log.html"><i class="fa fa-list"></i> Call Log Retrieval</a></h3>
-            </div>
-            <div class="panel-body">
-              <p>Use the <a href="./call-log.html">Call Log demo</a> to retrieve and display call logs.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-4">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title"><a href="./call-log.html"><i class="fa fa-volume-up"></i> Call Recordings</a></h3>
-            </div>
-            <div class="panel-body">
-              <p>Call recordings can be accessed the following ways:</p>
+              <p>The following resources are made available for assistance on the RingCentral API and SDKs:</p>
               <ol>
-                <li>Download</li>
-                <li>Streaming Playback</li>
+                <li><a href="https://devcommunity.ringcentral.com">RingCentral Developer Community <i class="fa fa-external-link"></i></a></li>
+                <li><a href="http://stackoverflow.com/questions/tagged/ringcentral">Stack Overflow <i class="fa fa-external-link"></i></a></li>
               </ol>
-              <p>See the integrated <a href="">Call Log / Recording demo</a> to access call recordings.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-4">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title"><a href="./contacts.html"><i class="fa fa-comments-o"></i> Sending SMS</a></h3>
-            </div>
-            <div class="panel-body">
-              <p>Integated SMS is a popular CTI add on for integrations.</p>
+              <p>You can also log issues against the individual GitHub projects, including <a href="https://github.com/grokify/ringcentral-cti-demo-js">this demo <i class="fa fa-external-link"></i> </a> and the <a href="https://github.com/ringcentral/js-sdk">JavaScript SDK <i class="fa fa-external-link"></i></a>.</p>
+              <p>Log into your <a href="https://developers.ringcentral.com">Developer Portal <i class="fa fa-external-link"></i></a> account for additional support.</p>
             </div>
           </div>
         </div>
@@ -238,7 +286,7 @@ $(window).on('beforeunload', function() {
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 
 <!-- BEGIN DEMO CONFIG MODAL -->
 <div class="modal fade" id="rcDemoConfigModal" tabindex="-1" role="dialog" aria-labelledby="rcDemoConfigModalLabel" aria-hidden="true">

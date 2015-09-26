@@ -20,7 +20,7 @@ var rcPgCfgGen = {
     { stub: 'contacts', disp: 'Contacts', fa: 'group' },
     { stub: 'call-log', disp: 'Call Log', fa: 'list' },
     { stub: 'linked-accounts', disp: 'Linked Accounts', fa: 'gear' },
-    { stub: 'resources', disp: 'Resources', fa: 'book' }
+    { stub: 'instructions', disp: 'Instructions', fa: 'book' }
   ]
 };
 
@@ -36,10 +36,10 @@ function rcDemo(rcPgCfgGen, rcPgCfgPg) {
     t.init = function() {
         hljs.initHighlightingOnLoad();
         t.Core.init();
-        t.Auth = new rcDemoAuth(t.Core); console.log("INIT A-V");
-        t.View = new rcDemoView(t.Core); console.log("INIT V-C");
-        t.Call = new rcDemoCall(t.Core); console.log("INIT C-L");
-        t.CallLog = new rcDemoCallLog(t.Core); console.log("INIT L-T");
+        t.Auth = new rcDemoAuth(t.Core); // console.log("INIT A-V");
+        t.View = new rcDemoView(t.Core); // console.log("INIT V-C");
+        t.Call = new rcDemoCall(t.Core); // console.log("INIT C-L");
+        t.CallLog = new rcDemoCallLog(t.Core); // console.log("INIT L-T");
         t.Contacts = new rcDemoContacts(t.Core);
         t.Sms = new rcDemoSms(t.Core);
     }
@@ -107,7 +107,7 @@ function rcDemoCore(rcPgCfgGen, rcPgCfgPg) {
         } else {
             appInfo = JSON.parse(json);
         }
-        console.log('GET ' + json);
+        //console.log('GET ' + json);
         return appInfo;
     }
     t.getUserInfo = function() {
@@ -450,11 +450,11 @@ function rcDemoCallLog(rcSdk) {
     }
     t.populateCalls = function(calls) {
         var rcsdk = t.rcSdk;
-        console.log("CALL_LOG_POP_1");
+        //console.log("CALL_LOG_POP_1");
         for (var i=0,l=calls.length;i<l;i++) {
             var call = calls[i];
             var json = JSON.stringify(call);
-            console.log(json);
+            //console.log(json);
             var newRowContent = '<tr><td>ABC</td></tr>';
             var type = '';
             if (call['type'] == 'Voice') {
