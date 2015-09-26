@@ -133,7 +133,7 @@ $('.telval').after(function() {
     //var w=(window.parent)?window.parent:window; w.location.assign('rcmobile://call?number=16501112222')
     return $('<button>')
         .attr('class','btn btn-xs btn-primary pad-x-1 ringUriCtl')
-        .attr('onclick','var w=(window.parent)?window.parent:window; w.location.assign("rcmobile://call?number="+ $(\'#' + idVal +'\').val())')
+        .attr('onclick','var w=(window.parent)?window.parent:window; w.location.assign("rcmobile://call?number="+ phoneUtils.formatE164($(\'#' + idVal +'\').val(),"us"))')
         .append('<i class="fa fa-phone"></i> RingUri');
 })
 // Add RingOut
@@ -152,7 +152,7 @@ $(function() {
         var fromPhoneNumber = rcDemo.Core.getUsername();
         rcDemo.Call.createRingOut({
             from: {phoneNumber: fromPhoneNumber},
-            to: {phoneNumber: toPhoneNumber},
+            to: {phoneNumber: phoneUtils.formatE164(toPhoneNumber,'us')},
             //callerId: {phoneNumber: '18882222222'}, // optional,
             playPrompt: true // optional
         });
