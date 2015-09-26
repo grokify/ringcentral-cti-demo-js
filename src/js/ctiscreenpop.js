@@ -4,6 +4,7 @@ function rcCallWinMgr(rcSdk) {
     t.domId = '#rcCallWindow';
     t.domIdStatus = '#rcCallWindowStatus';
     t.subscription = null;
+    t.refreshIntervalId = null;
     t.show = function() {
         $(t.domId).show();
     }
@@ -28,7 +29,7 @@ function rcCallWinMgr(rcSdk) {
         var minutesLabel = document.getElementById("rcMin");
         var secondsLabel = document.getElementById("rcSec");
         var totalSeconds = 0;
-        setInterval(setTime, 1000);
+        t.refreshIntervalId = setInterval(setTime, 1000);
 
         function setTime()
         {
@@ -50,8 +51,15 @@ function rcCallWinMgr(rcSdk) {
             }
         }
     }
+    t.stopCounter = function() {
+        if (t.refreshIntervalId) {
+            clearInterval(t.refreshIntervalId);
+        }
+    }
     t.processCall = function(call) {
         var ts = call.telephonyStatus;
+        $('#rcCallFrom').html(call.from);
+        $('#rcCallTo').html(call.to);
         if (ts == 'Ringing') {
             t.start('Ringing');
         } else if (ts == 'CallConnected') {
@@ -61,6 +69,7 @@ function rcCallWinMgr(rcSdk) {
             if (curStatus == 'Ringing' || curStatus == 'Connected') {
                 $(t.domIdStatus).html('Ended');
             }
+            t.stopCounter();
         }
     }
     t.startSubscription = function() {
