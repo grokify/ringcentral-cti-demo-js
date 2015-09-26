@@ -273,7 +273,6 @@ w.location.assign('rcmobile://call?number=16501112222');
 
                 t.Utils.extend(t.ringout, response.data);
                 t.Log.info('First status:', t.ringout.status.callStatus);
-                t.timeout = Utils.poll(update, 500, timeout);
 
             })
             .catch(t.handleError);
@@ -282,7 +281,7 @@ w.location.assign('rcmobile://call?number=16501112222');
 }
 
 var ringOutHelper = new ringOutHelper(rcsdk);
-ringOutHelper.createRingOut({
+ringOutHelper.create({
     from: {phoneNumber: fromPhoneNumber},
     to: {phoneNumber: toPhoneNumber},
     //callerId: {phoneNumber: '18882222222'}, // optional,
