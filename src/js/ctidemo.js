@@ -209,6 +209,7 @@ function rcDemoAuth(rcDemoCore) {
     t.init = function() {
         console.log("INIT_AUTH");
         t.pageAuthPopulate();
+        console.log("INIT_LISTEN_0");
         t.listenAuthData();
     }
     t.fields = [
@@ -236,6 +237,8 @@ function rcDemoAuth(rcDemoCore) {
     }
     // http://diveintohtml5.info/storage.html
     t.listenAuthData = function() {
+        console.log("INIT_LISTEN_1");
+        console.log("LISTENING")
         if (window.addEventListener) {
             window.addEventListener("storage", t.handleAuthData, false);
         } else {
