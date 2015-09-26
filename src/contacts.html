@@ -41,8 +41,14 @@ var rcCallWin = new rcCallWinMgr();
 
 $(function() {
     rcDemo.init();
-    rcCallWin.rcSdk = rcDemo.Core.rcSdk;
-    rcCallWin.subscriptionStart();
+    rcDemo.Core.rcSdk.getPlatform().isAuthorized()
+        .then(function () {
+            rcCallWin.rcSdk = rcDemo.Core.rcSdk;
+            rcCallWin.subscriptionStart();
+            bindClickToDialAndSms();
+        }).catch(function (e) {
+            $('#appMessage').show();
+        })
 });
 
     </script>
@@ -84,6 +90,14 @@ $(function() {
       </div>
     </div>
 
+    <div id="appMessage" class="container theme-showcase" role="main" style="display:none">
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <div class="alert alert-warning" role="alert"><i class="fa fa-exclamation-triangle"></i> Note: you need to <a href="./linked-accounts.html">link your RingCentral account</a> before you use interated RingCentral communications and data functionality.</div>
+        </div>
+      </div>
+    </div>
+    
     <div class="container theme-showcase" role="main">
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
@@ -109,6 +123,7 @@ $(function() {
     </div>
 
 <script>
+function bindClickToDialAndSms() {
 // Add SMS
 $('.telval').after(function() {
     //phoneUtils.formatE164(phoneNumber, regionCode);
@@ -158,6 +173,8 @@ $(function() {
         });
     });
 });
+
+}
 </script>
 
     <div class="container theme-showcase" role="main">

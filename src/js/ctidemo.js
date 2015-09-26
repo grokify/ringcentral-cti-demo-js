@@ -229,6 +229,11 @@ function rcDemoAuth(rcDemoCore) {
     }
     t.setAuthData = function(authData) {
         window.localStorage.setItem(t.lsKeyAuth, JSON.stringify(authData));
+        if ('access_token' in authData && authData['access_token'].length>0) {
+            $('#appMessage').hide();
+        } else {
+            $('#appMessage').show();          
+        }
     }
     // http://diveintohtml5.info/storage.html
     t.listenAuthData = function() {
@@ -245,6 +250,12 @@ function rcDemoAuth(rcDemoCore) {
         if (!e) { e = window.event; }
         if (e.key == t.lsKeyAuth) {
             t.pageAuthPopulate();
+            var authData = t.getAuthData();
+            if ('access_token' in authData && authData['access_token'].length>0) {
+                $('#appMessage').hide();
+            } else {
+                $('#appMessage').show();
+            }
         }
     }
     t.pageAuthPopulate = function() {

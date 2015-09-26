@@ -77,8 +77,13 @@ $(function() {
     rcDemo.init();
     rcDemo.Auth.init();
     rcDemo.Auth3l = new Auth3l(rcDemo.Core.rcSdk);
-    rcCallWin.rcSdk = rcDemo.Core.rcSdk;
-    rcCallWin.subscriptionStart();
+    rcDemo.Core.rcSdk.getPlatform().isAuthorized()
+        .then(function () {
+            rcCallWin.rcSdk = rcDemo.Core.rcSdk;
+            rcCallWin.subscriptionStart();
+        }).catch(function (e) {
+            $('#appMessage').show();
+        })
 });
 
     </script>
@@ -114,6 +119,14 @@ $(function() {
             <li id="rcPgCrumbLeaf" class="active"></li>
           </ol>
           <h2 id="rcPgTitle" class="rcPgTitle"></h2>
+        </div>
+      </div>
+    </div>
+
+    <div id="appMessage" class="container theme-showcase" role="main" style="display:none">
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+          <div class="alert alert-warning" role="alert"><i class="fa fa-exclamation-triangle"></i> Note: you need to <a href="./linked-accounts.html">link your RingCentral account</a> before you use interated RingCentral communications and data functionality.</div>
         </div>
       </div>
     </div>
