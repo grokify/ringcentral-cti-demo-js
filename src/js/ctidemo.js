@@ -93,9 +93,7 @@ function rcDemoCore(rcPgCfgGen, rcPgCfgPg) {
             $('#rcAuthPassword').val(userInfo['rcUserPassword']);
         }
     }
-    t.populateDomToken = function() {
-
-    }
+    t.populateDomToken = function() {}
     t.getAppInfo = function() {
         var appInfo = {};
         var json = window.localStorage.getItem(t.lsKeyApp);
@@ -349,6 +347,10 @@ function rcDemoAuth(rcDemoCore) {
         }
         $('#linked_status').html(' - Account Successfully Unlinked');
         t.pageAuthPopulate();
+    }
+    t.logoutAndClear = function() {
+        t.logout();
+        t.rcDemoCore.clearInfo();
     }
     t.refresh = function() {
         var authData = t.getAuthData();
