@@ -7,7 +7,7 @@ This is a demo that showcases various [Call Telephony Integration (CTI)](https:/
 
 The demo showcases the following use cases:
 
-1. Authorization
+1. Authorization via 3-Legged OAuth 2.0
 1. [Click-to-Call](https://en.wikipedia.org/wiki/Click-to-call)
 1. [Inbound Screen Pop](https://en.wikipedia.org/wiki/Screen_pop)
 1. Call Log Retrieval
@@ -20,7 +20,11 @@ The demo showcases the following use cases:
 
 ## Getting Started
 
-You can run this demo simply by adding the `src` directory to any webserver. There is no need to run a database as the demo stores all necessary data using HTML5 Local Storage (e.g. `window.localStorage`).
+You can see the full instructions online here:
+
+[Instructions](http://grokify.github.io/cti-demo/instructions.html)
+
+Alternately you can run this demo on any webserver by adding the `src` directory to the server's html directory. There is no need to run a database as the demo stores all necessary data using HTML5 Local Storage (e.g. `window.localStorage`). Instructions are provided below for Node.js http-server as one easy approach for this.
 
 ### Using Node.js http-server
 
