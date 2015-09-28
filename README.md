@@ -16,7 +16,7 @@ The demo showcases the following use cases:
 
 [View Screenshot](https://raw.githubusercontent.com/grokify/ringcentral-cti-demo-js/master/src/images/cti-demo.png)
 
-[View Live Demo](http://grokify.github.io/cti-demo/)
+[View Live Demon - http://grokify.github.io/cti-demo/](http://grokify.github.io/cti-demo/)
 
 ## Getting Started
 
@@ -91,7 +91,7 @@ RingCentral API Explorer
 
 Any reports of problems, comments or suggestions are most welcome.
 
-Please report these on [GitHub](https://github.com/grokify/ringcentral-cti-demo-js)
+Please report these on [GitHub](https://github.com/grokify/ringcentral-cti-demo-js).
 
 ## License
 
