@@ -24,7 +24,9 @@ You can run this demo simply by adding the `src` directory to any webserver. The
 
 ### Using Node.js http-server
 
-Using Node.js and `http-server` ([NPM package](https://www.npmjs.com/package/http-server)), you can start a local server using the following:
+You can run this demo using any server that can host static webpages, including GitHub pages.
+
+Using Node.js and `http-server` ([NPM package](https://www.npmjs.com/package/http-server)) is presented as one easy to use option.
 
 #### Pre-reqs
 
