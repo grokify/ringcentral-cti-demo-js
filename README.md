@@ -16,7 +16,7 @@ The demo showcases the following use cases:
 
 [View Screenshot](https://raw.githubusercontent.com/grokify/ringcentral-cti-demo-js/master/src/images/cti-demo.png)
 
-[View Live Demon - http://grokify.github.io/cti-demo/](http://grokify.github.io/cti-demo/)
+[View Live Demo - http://grokify.github.io/cti-demo/](http://grokify.github.io/cti-demo/)
 
 ## Getting Started
 
