@@ -52,6 +52,8 @@ function processOAuthRedirect(rcDemo) {
     if ('code' in qs) {
         var res = rcsdk.getPlatform().authorize(qs)
             .then(function(response) {
+                rcDemo.Core.retrieveAndSetUserNumbers();
+                rcDemo.Auth.setAuthEvent('rcAuthSuccess');
                 rcDemo.Auth.setAuthData(response.json);
                 window.open('', '_self', ''); 
                 window.close(); 

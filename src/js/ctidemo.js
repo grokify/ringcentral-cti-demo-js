@@ -121,7 +121,7 @@ function rcDemoCore(rcPgCfgGen, rcPgCfgPg) {
         } else {
             userInfo = JSON.parse(json);
         }
-        console.log('GET ' + json);
+        //console.log('GET_USER_INFO ' + json);
         return userInfo;
     }
     t.getUsername = function() {
@@ -198,11 +198,60 @@ function rcDemoCore(rcPgCfgGen, rcPgCfgPg) {
     t.rcServerSandbox = function() {
         return t.rcPgCfgGen['demoConfig']['url']['rcServerSandbox'];
     }
+    t.retrieveAndSetUserNumbers = function() {
+        var debug = true;
+        console.log("RET_USER_NUMBERS_FORWARDING");
+        t.rcSdk.getPlatform().get(
+            '/account/~/extension/~/forwarding-number'
+        ).then(function(response) {
+            var json = JSON.stringify(response.json);
+            var userInfo = t.getUserInfo();
+            if ('records' in response.json) {
+                userInfo['rcUserForwardingNumbers'] = response.json['records'];
+            }
+            t.rcSdk.getPlatform().get(
+                '/account/~'
+            ).then(function(response) {
+                var data = response.json;
+                var json = JSON.stringify(response.json);
+                var rcUserNumbers = [];
+                if ('rcUserForwardingNumbers' in userInfo) {
+                    for (var i=0,l=userInfo['rcUserForwardingNumbers'].length;i<l;i++) {
+                        var fwdInfo = userInfo['rcUserForwardingNumbers'][i];
+                        var numInfo = {};
+                        if ('phoneNumber' in fwdInfo) {
+                            var num = fwdInfo['phoneNumber'];
+                            numInfo['rcNumberE164'] = num;
+                            numInfo['rcNumberNational'] = phoneUtils.formatNational(num, 'us')
+                            if ('label' in fwdInfo) {
+                                numInfo['rcLabel'] = fwdInfo['label'];
+                            } else {
+                                numInfo['rcLabel'] = 'Direct Number';
+                            }
+                            rcUserNumbers.push(numInfo);
+                        }
+                    }
+                }
+                if ('mainNumber' in data) {
+                    var num  = data['mainNumber'];
+                    var disp = phoneUtils.formatNational(num, 'us');
+                    var numInfo = {rcNumberE164: num, rcNumberNational: disp, rcLabel: 'Main Company Number'};
+                    rcUserNumbers.push(numInfo);
+                }  
+                userInfo['rcUserNumbers'] = rcUserNumbers;
+                t.setUserInfo(userInfo);
+                console.log("USER_NUMBERS: " + JSON.stringify(userInfo));
+            })
+        }).catch(function(e) {
+            alert('Error: ' + e.message);
+        })
+    }
 }
 
 function rcDemoAuth(rcDemoCore) {
     var t=this;
-    t.lsKeyAuth = 'rcAuthInfo';
+    t.lsKeyAuth  = 'rcAuthInfo';
+    t.lsKeyEvent = 'rcAuthEvent';
     t.rcDemoCore = rcDemoCore;
     t.rcPlatform = t.rcDemoCore.rcSdk.getPlatform();
     t.debug = false;
@@ -236,9 +285,12 @@ function rcDemoAuth(rcDemoCore) {
         }
     }
     // http://diveintohtml5.info/storage.html
+    t.setAuthEvent = function(eventString) {
+        console.log('RC_AUTH_SET_EVENT [' + eventString + ']')
+        window.localStorage.setItem(t.lsKeyEvent, eventString);
+    }
     t.listenAuthData = function() {
-        console.log("INIT_LISTEN_1");
-        console.log("LISTENING")
+        console.log("LISTEN_AUTH_DATA_S1");
         if (window.addEventListener) {
             window.addEventListener("storage", t.handleAuthData, false);
         } else {
@@ -248,13 +300,22 @@ function rcDemoAuth(rcDemoCore) {
     t.handleAuthData = function(e) {
         console.log("HANDLE_AUTH_DATA");
         if (!e) { e = window.event; }
+        console.log("HANDLE_AUTH_DATA_KEY " + e.key);
         if (e.key == t.lsKeyAuth) {
             t.pageAuthPopulate();
+            t.rcDemoCore.retrieveAndSetUserNumbers();
             var authData = t.getAuthData();
             if ('access_token' in authData && authData['access_token'].length>0) {
                 $('#appMessage').hide();
             } else {
                 $('#appMessage').show();
+            }
+        }
+        if (e.key == t.lsKeyEvent) {
+            console.log("HANDLE_AUTH_DATA_EVENT_AUTHZ_STATUS")
+            var eventVal = window.localStorage.getItem(e.key)
+            if (eventVal == 'rcAuthSuccess') {
+                t.rcDemoCore.retrieveAndSetUserNumbers();
             }
         }
     }
@@ -310,6 +371,7 @@ function rcDemoAuth(rcDemoCore) {
         if (extension.length>0) {
             userpath = userpath + '*' + extension;
         }
+
         var debug = {username:username,extension:extension,password:password};
         t.rcPlatform.authorize({
             username: username,
@@ -317,7 +379,7 @@ function rcDemoAuth(rcDemoCore) {
             password: password
         }).then(function(response) {
             if (t.debug) {
-                console.log('authz_success');
+                console.log('AUTHZ_SUCCESS');
                 console.log(JSON.stringify(debug));
                 console.log(response.json);
             }
@@ -329,6 +391,7 @@ function rcDemoAuth(rcDemoCore) {
             data['userpath_ext'] = extension;
             //window.localStorage.setItem(t.lsKeyAuth, JSON.stringify(data));
             t.setAuthData(data);
+            t.rcDemoCore.retrieveAndSetUserForwardingNumbers();
             t.pageAuthPopulate();
             console.log('AUTHZ_DISPLAYED');
         }).catch(function(e) {
@@ -390,6 +453,20 @@ function rcDemoCall(rcDemoCore) {
         var roHelper = new ringOutHelper(t.rcSdk);
         roHelper.create(unsavedRingout);
         return roHelper;
+    }
+    t.createRingOutSimple = function(from, to, options) {
+        if (!options) {
+            options = {
+                from: {phoneNumber: from},
+                to:   {phoneNumber: to},
+                playPrompt: true
+            };
+        }
+        console.log("FROM " + from);
+        console.log("TO " + to);
+        options['from'] = {phoneNumber: phoneUtils.formatE164(from,'us')};
+        options['to'] = {phoneNumber: phoneUtils.formatE164(to,'us')};
+        t.createRingOut(options);
     }
 }
 
@@ -583,6 +660,8 @@ function rcDemoSms(rcDemoCore) {
     t.rcSdk = t.rcDemoCore.rcSdk;
     t.sendMessage = function(from, to, text) {
         var platform = t.rcSdk.getPlatform();
+        from = phoneUtils.formatE164(from,'us');
+        to = phoneUtils.formatE164(to,'us');        
         platform.post('/account/~/extension/~/sms', {
             body: {
                 from: {phoneNumber:from}, // Your sms-enabled phone number

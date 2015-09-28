@@ -16,6 +16,7 @@
     <link href="./css/highlight.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
     <script src="./vendor/hideShowPassword/2.0.7/hideShowPassword.min.js"></script>
+    <script src="./vendor/nathanhammond/libphonenumber/0.9.3/dist/libphonenumber.js"></script>
     <!-- RC SDK -->
     <script src="./vendor/es6-promise-polyfill/1.0.0/promise.js"></script>
     <script src="./vendor/crypto-js/3.1.2/rollups/aes.js"></script>
@@ -351,6 +352,7 @@ $(function() {
         <hr>
         <p style="font-weight:bold">Debug</p>
         <button type="button" class="btn btn-default" onclick="rcCallWin.toggle();return false;">Toggle Call Window</button>
+        <button type="button" class="btn btn-default" onclick="rcDemo.Core.retrieveAndSetUserNumbers();return false;">Retrieve User Numbers</button>
       </td>
     </tr>
   </table>

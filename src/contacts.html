@@ -46,6 +46,9 @@ $(function() {
             rcCallWin.rcSdk = rcDemo.Core.rcSdk;
             rcCallWin.startSubscription();
             bindClickToDialAndSms();
+            populateUserNumbers(rcDemo,'rcDemoSmsFrom','rcDemoSmsFromWrap');
+            populateUserNumbers(rcDemo,'rcDemoRingOutFrom','rcDemoRingOutFromWrap');
+            //populateUserNumbersOld(rcDemo);
         }).catch(function (e) {
             $('#appMessage').show();
         })
@@ -115,7 +118,7 @@ $(function() {
             </tr>
             <tr>
               <td>
-                John</td><td>Wang</td><td><a href="http://github.com/grokify">http://github.com/grokify</a></td><td><input id="telval1" class="telval" type="text" value="16501112222">
+                John</td><td>Wang</td><td><a href="http://github.com/grokify">http://github.com/grokify</a></td><td><input id="telval1" class="telval" type="text" value="1 (650) 111-2222">
               </td>
             </tr>
           </table>
@@ -129,15 +132,14 @@ $(function() {
 function bindClickToDialAndSms() {
 // Add SMS
 $('.telval').after(function() {
-    //phoneUtils.formatE164(phoneNumber, regionCode);
     return $('<button>')
         .attr('class','btn btn-xs btn-primary pad-x-1')
         .attr('data-toggle','modal')
         .attr('data-target','#rcDemoSmsModal')
         .attr('onclick',
-            //'$("#rcDemoSmsTo").val( $(\'#'+$(this).attr('id')+'\').val())' + ';'
-            '$("#rcDemoSmsTo").val( phoneUtils.formatE164($(\'#'+$(this).attr('id')+'\').val()),"us")' + ';'
-            + '$("#rcDemoSmsFrom").val(\'' + rcDemo.Core.getUsername() + '\')'
+            //'$("#rcDemoSmsTo").val( $(\'#'+$(this).attr('id')+'\').val())'
+            //'$("#rcDemoSmsTo").val( phoneUtils.formatE164($(\'#'+$(this).attr('id')+'\').val()),"us")'
+            '$("#rcDemoSmsTo").val( phoneUtils.formatNational($(\'#'+$(this).attr('id')+'\').val()),"us")'
         )
         .append('<i class="fa fa-comments-o"></i> SMS');
 })
@@ -155,6 +157,21 @@ $('.telval').after(function() {
         .append('<i class="fa fa-phone"></i> RingUri');
 })
 // Add RingOut
+$('.telval').after(function() {
+    return $('<button>')
+        .attr('class','btn btn-xs btn-primary pad-x-1')
+        .attr('data-toggle','modal')
+        .attr('data-target','#rcDemoRingOutModal')
+        .attr('onclick',
+            //'$("#rcDemoSmsTo").val( $(\'#'+$(this).attr('id')+'\').val())' + ';'
+            //'$("#rcDemoRingOutTo").val( phoneUtils.formatE164($(\'#'+$(this).attr('id')+'\').val()),"us")' + ';'
+            '$("#rcDemoRingOutTo").val( phoneUtils.formatNational($(\'#'+$(this).attr('id')+'\').val()),"us")' + ';'
+            //+ '$("#rcDemoRingOutFrom").val(\'' + rcDemo.Core.getUsername() + '\')'
+        )
+        .append('<i class="fa fa-phone"></i> RingOut');
+})
+
+/*
 $('.telval').after(function() {
     return $('<button>')
         .attr('id',$(this).attr('id') + 'RingOut')
@@ -176,7 +193,7 @@ $(function() {
         });
     });
 });
-
+*/
 }
 </script>
 
@@ -337,6 +354,76 @@ platform.post('/account/~/extension/~/sms', {
     </div>
   </div>
 
+<!-- BEGIN DEMO RINGOUT MODAL -->
+<div class="modal fade" id="rcDemoRingOutModal" tabindex="-1" role="dialog" aria-labelledby="rcDemoRingOutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content"><form>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Make RingOut Call</h4>
+      </div>
+      <div class="modal-body">
+
+<div class="form-group"><!-- BEGIN DEMO RINGOUT MODAL BODY -->
+  <table border="0" style="width:100%">
+    <tr>
+      <td>
+        Caller ID:
+      </td>
+      <td id="rcDemoRingOutFromWrap"></td>
+    </tr>
+    <tr>
+      <td>
+        To:
+      </td><td>
+        <input type="text" id="rcDemoRingOutTo" class="form-control" value="" placeholder="To" />
+      </td>
+    </tr>
+  </table>
+</div><!-- END DEMO RINGOUT MODAL BODY -->
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="rcDemo.Call.createRingOutSimple($('#rcDemoRingOutFrom').val(),$('#rcDemoRingOutTo').val())">Call</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+
+function populateUserNumbers(rcDemo,elementId,parentId) {
+    console.log("POP_NUMBERS");
+    var userInfo = rcDemo.Core.getUserInfo();
+    if ('rcUserNumbers' in userInfo && userInfo['rcUserNumbers'].length>0) {
+        var select = $('<select>').attr('id',elementId);
+        for (var i=0,l=userInfo['rcUserNumbers'].length;i<l;i++) {
+            var num = userInfo['rcUserNumbers'][i];
+            var option = $('<option>')
+                .attr('value', num['rcNumberE164'])
+                .append(num['rcNumberNational'] + ' - ' + num['rcLabel'])
+            if (i==0) {
+                option.prop('selected',true);
+            }
+            select.append(option);
+        }
+        $('#' + parentId).append(select);
+    } else {
+        // <input type="text" id="rcDemoSmsFrom" class="form-control" value="" placeholder="From" />
+        var input = $('<input>')
+            .attr('id',elementId)
+            .attr('type', 'text')
+            .attr('class', 'form-control')
+            .attr('value', '')
+            .attr('placeholder', 'From')
+        $('#' + parentId).append(input);
+    }
+}   
+
+</script>
+<!-- END RINGOUT CONFIG MODAL -->
+
 <!-- BEGIN DEMO SMS MODAL -->
 <div class="modal fade" id="rcDemoSmsModal" tabindex="-1" role="dialog" aria-labelledby="rcDemoSmsModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -352,9 +439,8 @@ platform.post('/account/~/extension/~/sms', {
     <tr>
       <td>
         From:
-      </td><td>
-        <input type="text" id="rcDemoSmsFrom" class="form-control" value="" placeholder="From" />
       </td>
+      <td id="rcDemoSmsFromWrap"></td>
     </tr>
     <tr>
       <td>
@@ -447,6 +533,7 @@ platform.post('/account/~/extension/~/sms', {
         <hr>
         <p style="font-weight:bold">Debug</p>
         <button type="button" class="btn btn-default" onclick="rcCallWin.toggle();return false;">Toggle Call Window</button>
+        <button type="button" class="btn btn-default" onclick="rcDemo.Core.retrieveAndSetUserNumbers();return false;">Retrieve User Numbers</button>
       </td>
     </tr>
   </table>
