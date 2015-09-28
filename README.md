@@ -20,11 +20,11 @@ The demo showcases the following use cases:
 
 ## Getting Started
 
-You can see the full instructions online here:
+The full installation instructions are included as an HTML file in the demo itself. You can view the [full installation instructions on the live demo](http://grokify.github.io/cti-demo/instructions.html).
 
-[Instructions](http://grokify.github.io/cti-demo/instructions.html)
+Since this runs live on GitHub page, you can run this demo without any server-side installation, though it may be worthwhile to install the RingCentral for Desktop softphone as described in the instructions.
 
-Alternately you can run this demo on any webserver by adding the `src` directory to the server's html directory. There is no need to run a database as the demo stores all necessary data using HTML5 Local Storage (e.g. `window.localStorage`). Instructions are provided below for Node.js http-server as one easy approach for this.
+You can also run this demo on any webserver by adding the `src` directory to the server's html directory. This may be useful if you wish to edit the pages. There is no need to run a database as the demo stores all necessary data using HTML5 Local Storage (e.g. `window.localStorage`). Instructions are provided below for Node.js http-server as one easy approach for this.
 
 ### Using Node.js http-server
 
