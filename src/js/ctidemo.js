@@ -28,11 +28,6 @@ function rcDemo(rcPgCfgGen, rcPgCfgPg) {
     var t=this;
     console.log("RCDEMO_INIT_S1");
     t.Core = new rcDemoCore(rcPgCfgGen, rcPgCfgPg);
-    /*t.Auth = new rcDemoAuth(t.Core);
-    t.View = new rcDemoView(t.Core);
-    t.Call = new rcDemoCall(t.Core);
-    t.CallLog = new rcDemoCallLog(t.Core);
-    t.Contacts = new rcDemoContacts(t.Core);*/
     t.init = function() {
         hljs.initHighlightingOnLoad();
         t.Core.init();
@@ -157,11 +152,8 @@ function rcDemoCore(rcPgCfgGen, rcPgCfgPg) {
         });
     }
     t.setInfoFromDom = function() {
-        //console.log('setInfoFromDom_S1');
         t.setAppInfoFromDom();
-        //console.log('setInfoFromDom_S2');
         t.setUserInfoFromDom();
-        //console.log('setInfoFromDom_SZ');
     }
     t.setAppInfoFromDom = function() {
         var appInfo = t.getAppInfo();
@@ -170,19 +162,15 @@ function rcDemoCore(rcPgCfgGen, rcPgCfgPg) {
             appInfo[fields[i]] = $('#' + fields[i]).val();
         }
         var json = JSON.stringify(appInfo);
-        //console.log("SET_APP_INFO_DOM_Z " + json);
         t.setAppInfo(appInfo);
     }
     t.setUserInfoFromDom = function() {
         var userInfo = t.getUserInfo();
         var fields = t.lsUserFields;
         var json = JSON.stringify(userInfo);
-        //console.log("SET_USER_INFO_DOM_S1 " + json);
         for (var i=0,l=t.lsUserFields.length;i<l;i++) {
             userInfo[fields[i]] = $('#' + fields[i]).val() || '';
         }
-        var json2 = JSON.stringify(userInfo);
-        //console.log("SET_USER_INFO_DOM_SZ " + json2);
         t.setUserInfo(userInfo);
     }
     t.clearInfo = function() {

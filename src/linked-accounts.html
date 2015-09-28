@@ -91,6 +91,8 @@ $(function() {
             rcCallWin.startSubscription();
         }).catch(function (e) {
             $('#appMessage').show();
+            rcDemo.Auth.setAuthData({});
+            rcDemo.Auth.pageAuthPopulate();
         })
     $(window).unload(function() {
         rcCallWin.endSubscription();  
