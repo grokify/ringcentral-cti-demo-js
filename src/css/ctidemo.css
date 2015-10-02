@@ -3,6 +3,8 @@
 body {padding-top:70px}
 pre {margin-bottom:2em;}
 
+.rcLogoTextRing {color:#0064A0;font-weight:bold;font-style:italic;}
+.rcLogoTextCentral {color:orange;font-weight:bold;font-style:italic;}
 .rcPgTitle {margin:0 0 0.8em 0; padding:0;}
 
 #rcCallWindow {
