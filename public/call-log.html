@@ -243,7 +243,7 @@ recordingUrl = csdk.getPlatform().apiUrl(uri, {addToken: true});</code></pre>
               <p>This demo uses jQuery to create the HTML5 audio element as follows:</p>
 
 <pre><code class="javascript">var recordingUrl = 'https://platform.ringcentral.com/....';
-recordingUrl = csdk.getPlatform().apiUrl(uri, {addToken: true});
+recordingUrl = rcsdk.getPlatform().apiUrl(uri, {addToken: true});
 var recordingEl = $('&lt;audio&gt;').attr('controls', 'controls').append(
     $('&lt;source&gt;').attr('src', recordingUrl).attr('type', 'audio/mpeg')
 .append(
