@@ -1,6 +1,9 @@
 RingCentral CTI Demo for JavaScript
 ===================================
 
+[![Stack Overflow][stackoverflow-svg]][stackoverflow-url]
+[![Chat][chat-svg]][chat-url]
+
 ## Overview
 
 This is a demo that showcases various [Call Telephony Integration (CTI)](https://en.wikipedia.org/wiki/Computer_telephony_integration) use cases for the RingCentral Connect Platform. The demo runs as a set of HTML5 static webpages that can on a server or locally.
@@ -98,3 +101,8 @@ Please report these on [GitHub](https://github.com/grokify/ringcentral-cti-demo-
 RingCentral SDK is available under an MIT-style license. See [LICENSE.txt](LICENSE.txt) for details.
 
 RingCentral SDK &copy; 2015 by John Wang
+
+ [chat-svg]: https://img.shields.io/badge/chat-on%20glip-orange.svg
+ [chat-url]: https://glipped.herokuapp.com/
+ [stackoverflow-svg]: https://img.shields.io/badge/Stack%20Overflow-ringcentral-orange.svg
+ [stackoverflow-url]: https://stackoverflow.com/questions/tagged/ringcentral
